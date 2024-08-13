@@ -1,95 +1,119 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import Head from 'next/head';
+import { Container, Typography, Button, Grid, Box, Card, CardContent } from '@mui/material';
+
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  
+    <>
+      <Head>
+        <title>Flashcard SaaS</title>
+        <meta name="description" content="Create and study flashcards effortlessly." />
+      </Head>
+      <Container maxWidth="lg" sx={{ mt: 8 }}>
+        {/* Hero Section */}
+        <Box sx={{ textAlign: 'center', py: 8 }}>
+          <Typography variant="h2" gutterBottom>
+            Supercharge Your Learning with Flashcards
+          </Typography>
+          <Typography variant="h6" color="textSecondary" paragraph>
+            Create, manage, and study flashcards with ease. Sign up today to start enhancing your knowledge.
+          </Typography>
+          <Button variant="contained" color="primary" size="large" sx={{ m: 1 }}>
+            Get Started
+          </Button>
+          <Button variant="outlined" color="secondary" size="large" sx={{ m: 1 }}>
+            Log In
+          </Button>
+        </Box>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        {/* Features Section */}
+        <Box sx={{ py: 8 }}>
+          <Typography variant="h4" align="center" gutterBottom>
+            Features
+          </Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Easy to Use
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Our intuitive interface makes it simple to create and organize flashcards quickly.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Study Anywhere
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Access your flashcards from any device, whether you’re on the go or at home.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Analytics
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Track your progress with detailed statistics on your study sessions.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        {/* Pricing Section */}
+        <Box sx={{ py: 8, textAlign: 'center' }}>
+          <Typography variant="h4" gutterBottom>
+            Pricing
+          </Typography>
+          <Typography variant="h6" color="textSecondary" paragraph>
+            Choose a plan that fits your needs.
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Free
+                  </Typography>
+                  <Typography variant="h6">$0/month</Typography>
+                  <Typography color="textSecondary">Basic features for casual users.</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    Pro
+                  </Typography>
+                  <Typography variant="h6">$9.99/month</Typography>
+                  <Typography color="textSecondary">Advanced features for serious learners.</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        {/* Footer */}
+        <Box sx={{ py: 4, textAlign: 'center' }}>
+          <Typography variant="body2" color="textSecondary">
+            © 2024 Flashcard SaaS. All rights reserved.
+          </Typography>
+        </Box>
+      </Container>
+    </>
   );
 }
