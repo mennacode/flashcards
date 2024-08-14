@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Head from 'next/head';
 import { AppBar, Toolbar, Typography, Button, Container, Grid, Box, Card, CardContent } from '@mui/material';
+import { SignedIn,SignedOut, UserButton, UserProfile} from "@clerk/nextjs";
 
 
 export default function Home() {
@@ -17,8 +18,13 @@ export default function Home() {
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Flashcard SaaS
         </Typography>
+        <SignedOut>
         <Button color="inherit" href=  "/sign-in">Login</Button>
         <Button color="inherit"href= "/sign-up">Sign Up</Button>
+        </SignedOut>
+        <SignedIn>
+          <UserButton/>
+        </SignedIn>
       </Toolbar>
     </AppBar>
 
