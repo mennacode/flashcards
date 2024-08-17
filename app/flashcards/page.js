@@ -1,119 +1,94 @@
-
-"use client"
-
-import {useUser} from "@clerk/nextjs"
-import {useEffect} from "react"
-import {collection, docs, getDocs, listConnections}  from "firebase/firestore"
-import db from "@/firebase"
-
-// export default function Flashcard(){
-
-// const { isLoaded, isSignedIn, user } = useUser()
-// const [flashcards, setFlashcards]= useState([])
-// useEffect(()=> {
-//   async function getFlashcards(){
-//   //Check to see if doc exists
-//   if (user === undefined) {
-//     return
-//   }
-//   const docRef= doc(collection(db, "users"), user.id)
-//   const docSnap= await  getDocs(docRef)
-
-//   if (doc.Snap.exists()){
-    
-//     const collections= docSnap.data().flashcards
-//     setFlashcards(collections)
-    
-//  }
-//   else{
-//     //Create 
-//     await setDoc(docRef,{})
-//   }
-// }
-// getFlashcards()
-// },[user])
-
-
-//   if (!isLoaded || !isSignedIn) {
-//     // Handle loading state however you like
-//     return null
-//   }
-
-
-
-//   console.log(user.id)
-// return <></>
-// }
-
-
 "use client"
 
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import db from "@/firebase";
-import { useRouter } from "next/router";
-import { CardActionArea, CardContent, Container, Typography } from "@mui/material";
-import { Container, Grid, Card, CardActionArea, CardContent, Typography } from "@mui/material";  // Import MUI components
-
-
-
+import { useRouter } from "next/navigation";
+import { Container, Grid, Card, CardActionArea, CardContent, Typography, Box, TextField, Paper, Button } from "@mui/material";  // Import MUI components
 
 export default function Flashcard() {
   const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
-  const router = useRouter();
+  const [flipped, setFlipped] = useState([]);
+  const [text, setText] = useState('');
+  const[name, setName] = useState('');
+  const [llama, setLlama] = useState(false);
+  const router = useRouter()
 
-  useEffect(() => {
-    async function getFlashcards() {
-      // Check to see if doc exists
-      if (!user) {
-        return;
-      }
-
-      const docRef = doc(collection(db, "users"), user.id);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const collections = docSnap.data().flashcards;
-        setFlashcards(collections);
-      } else {
-        // Create document if it doesn't exist
-        await setDoc(docRef, { flashcards: [] });
-      }
-    }
-
-    getFlashcards();
-  }, [user]);
-
-  if (!isLoaded || !isSignedIn) {
-    // Handle loading state however you like
-    return null;
+  const handleSubmit = async() => {
+    fetch('api/generate', {
+      method: 'POST',
+      body: text
+    }).then((res) => res.json()).then(data > setFlashcards(data))
   }
 
   // Function to handle card click
-  const handleCardClick = (name) => {
-    router.push(`/page/flashcard?id=${name}`);
+  const handleCardClick = (id) => {
+    setFlipped((prev) => ({
+      ...prev,
+      [id]: !prev[id]
+    }))
   };
 
-  return (
+  const handleOpen = () => {
+    setLlama(true)
+  }
 
+  const handleClose = () => {
+    setLlama(false)
+  }
+
+  const saveFlashcards = async() => {
+    if(!name) {
+      alert("Please enter a name")
+      return
+    }
+
+    const batch = writeBatch(db)
+    const userDocRef = doc(collection(db, "users"), user.id)
+    const docSnap = await getDoc(userDocRef)
+
+    if(docSnap.exists()) {
+      const collections = docSnap.data().flashcards || []
+      if(collections.find((f) => f.name === name)) {
+        alert("Flashcard collection with the same name already exists.")
+        return 
+      }
+      else {
+        collections.push({name})
+        batch.set(userDocRef, {flashcards: collections}, {merge: true})
+      }
+    }
+    else {
+      batch.set(userDocRef, {flashcards: [{name}]})
+    }
+
+    const colRef = collection(userDocRef, name)
+    flashcards.forEach((flashcard) => {
+      const cardDocRef = doc(colRef)
+      batch.set(cardDocRef, flashcard)
+    })
+
+    await batch.commit()
+    handleClose()
+    router.push('/flashcards')
+  }
+
+  return (
     <Container maxwidth="md">
-      <Grid container spacing ={3} sx={{mt:4}}>
-        {flashcards.map((flashcard, index) => (
-          <Grid item xs={12} sm={6} md={4}  key={index}>
-            <Card>
-              <CardActionArea onClick={() => handleCardClick(flashcard)}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {flashcard}
-                </Typography>
-              </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box sx={{ mt:4,
+                 mb: 6,
+                 display: "flex",
+                 flexDirection: "column",
+                 alignItems: "center"}}>
+        <Typography variant="h4">Generate Flashcards</Typography>
+        <Paper sx={{p:4, width:"100%"}}>
+          <TextField value={text} onChange={(e) => setText(e.target.value)} label="Enter text" fullWidth multiline
+                     rows={4} variant="outlined" sx={{mb:2}}/>
+          <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>Submit</Button>
+        </Paper>
+      </Box>
     </Container>
-);
+  );
 }
