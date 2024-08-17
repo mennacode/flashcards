@@ -3,10 +3,6 @@ import React from "react";
 import {Container, Box, Typography, AppBar, Toolbar, Button} from "@mui/material"
 import Link from 'next/link';
 
-
-
-
-
 export default function Page() {
   return  (
     <>
@@ -14,7 +10,7 @@ export default function Page() {
     <AppBar position="static" sx={{ backgroundColor: '#1a73e8', boxShadow: 'none', py: 1 }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-            Flashcard SaaS
+            Smartolia
         </Typography>
         <Box>
             <Link href="/login" passHref>
@@ -30,8 +26,6 @@ export default function Page() {
         </Box>
         </Toolbar>
     </AppBar>
-
-
 
     {/* Sign-Up Form */}
     <Container maxWidth="sm" sx={{ mt: 8 }}>
