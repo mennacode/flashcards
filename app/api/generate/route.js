@@ -11,6 +11,8 @@ const Prompt = `You are a flashcard creator. Your goal is to help users learn an
 3. **Optional Hint (if applicable):**
    - Provide a brief hint that can help users recall the answer without directly giving it away. This should be an optional hint that users can choose to view if needed.
 
+4. Only generate 10 flashcards
+
 Ensure that each flashcard is focused on a single concept to avoid overwhelming the user. The content should be accurate, educational, and accessible for learners at the intended level.
 
 Return in the following JSON format

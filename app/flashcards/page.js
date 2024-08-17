@@ -89,6 +89,29 @@ export default function Flashcard() {
           <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>Submit</Button>
         </Paper>
       </Box>
+      {flashcards.length > 0 && (
+        <Box sx={{mt:4}}>
+          <Typography variant="h5">Flashcards Preview</Typography>
+          <Grid container spacing={3}>
+            {flashcards.map((flashcard, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card>
+                  <CardActionArea onClick={() => {
+                    handleCardClick(index)
+                  }}>
+                    <CardContent>
+                      <Box><div><div><Typography variant="h5" component="div">
+                        {flashcard.front}</Typography></div></div>
+                        <div><div><Typography variant="h5" component="div">
+                        {flashcard.back}</Typography></div></div></Box>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
     </Container>
   );
 }
