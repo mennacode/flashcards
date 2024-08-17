@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Head from 'next/head';
 import { AppBar, Toolbar, Typography, Button, Container, Grid, Box, Card, CardContent } from '@mui/material';
-import { SignedIn,SignedOut, UserButton, UserProfile} from "@clerk/nextjs";
-
+import getStripe from "@/utils/get-stripe";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <>
     <Head>
-      <title>Flashcard SaaS</title>
+      <title>Smartolia</title>
       <meta name="description" content="Create and study flashcards effortlessly." />
     </Head>
 
@@ -16,7 +16,7 @@ export default function Home() {
     <AppBar position="static" sx={{ backgroundColor: '#1976d2' }}>
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Flashcard SaaS
+          Smartolia
         </Typography>
         <SignedOut>
         <Button color="inherit" href=  "/sign-in">Login</Button>
